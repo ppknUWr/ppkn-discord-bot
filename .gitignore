@@ -121,3 +121,7 @@ TEST-**.xml
 
 # Mac OS .DS_Store, which is a file that stores custom attributes of its containing folder
 .DS_Store
+
+# Private things, like Bot key
+
+private/

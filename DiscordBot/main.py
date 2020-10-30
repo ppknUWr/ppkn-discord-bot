@@ -14,7 +14,7 @@ TOKEN = f.readline()
  
 f.close
 
-initialize_extensions = ['voicechannelcommands','textchannelcommands','covid','kurswalut','trivia']
+initialize_extensions = ['voicechannelcommands','textchannelcommands'] # 'covid','kurswalut','trivia' 
 if __name__ == '__main__':
     for ext in initialize_extensions:
         bot.load_extension(ext)

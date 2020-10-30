@@ -26,11 +26,11 @@ server_id = int(f.readline())
 
 f.close()
 
-f = open('private/weatherapi.txt','r')
+# f = open('private/weatherapi.txt','r')
 
-api_key = f.readline()
+# api_key = f.readline()
 
-f.close()
+# f.close()
 
 base_url = "http://api.openweathermap.org/data/2.5/weather?"
 
@@ -90,28 +90,28 @@ class TextChannelCog(commands.Cog):
                 time = 60
             await asyncio.sleep(time) 
     
-    @commands.command()
-    async def weather(self, ctx, arg):
-        """
-        Wyświetla aktualną pogodę w danym mieście
-        Funkcja napisana przez Jakub Lorek.
-        """
-        city_name = arg
-        complete_url = base_url + "appid=" + api_key + "&q=" + city_name
-        response = requests.get(complete_url)
-        x = response.json()
+    # @commands.command()
+    # async def weather(self, ctx, arg):
+    #     """
+    #     Wyświetla aktualną pogodę w danym mieście
+    #     Funkcja napisana przez Jakub Lorek.
+    #     """
+    #     city_name = arg
+    #     complete_url = base_url + "appid=" + api_key + "&q=" + city_name
+    #     response = requests.get(complete_url)
+    #     x = response.json()
 
-        # checks if city name exists
-        if x['cod'] != "404":
-            y = x['main']
-            current_temperature = round(y['temp'] - 273.15)
-            current_pressure = y['pressure']
-            current_humidity = y['humidity']
-            z = x['weather']
-            weather_description = z[0]['description']
-            await ctx.send('Miasto: {0}\nTemperatura: {1}C\nCiśnienie: {2}hPa\nWilgotność: {3}%\nPogoda: {4}'.format(city_name, current_temperature, current_pressure, current_humidity, weather_description))
-        else:
-            await ctx.send("Miasto nie zostało znalezione, spróbuj ponownie")
+    #     # checks if city name exists
+    #     if x['cod'] != "404":
+    #         y = x['main']
+    #         current_temperature = round(y['temp'] - 273.15)
+    #         current_pressure = y['pressure']
+    #         current_humidity = y['humidity']
+    #         z = x['weather']
+    #         weather_description = z[0]['description']
+    #         await ctx.send('Miasto: {0}\nTemperatura: {1}C\nCiśnienie: {2}hPa\nWilgotność: {3}%\nPogoda: {4}'.format(city_name, current_temperature, current_pressure, current_humidity, weather_description))
+    #     else:
+    #         await ctx.send("Miasto nie zostało znalezione, spróbuj ponownie")
     
     @commands.command()
     async def schapoinfo(self, ctx):

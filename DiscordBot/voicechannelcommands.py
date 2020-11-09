@@ -1,6 +1,5 @@
 from __future__ import unicode_literals
 import discord
-import youtube_dl
 from discord.ext import commands
 from discord.ext.commands import Bot
 from discord.voice_client import VoiceClient

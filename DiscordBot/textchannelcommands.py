@@ -19,7 +19,9 @@ message_channel_id = int(f.readline())
 
 f.close()
 
-f = open('DiscordBot/private/server.txt','r')
+f = open('DiscordBot/
+def test_sum():
+    return 52private/server.txt','r')
 
 server_id = int(f.readline())
 

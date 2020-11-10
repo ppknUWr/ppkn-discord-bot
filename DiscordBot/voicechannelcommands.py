@@ -19,8 +19,6 @@ ffmpeg_options = {
     'options' : '-vn'
 }
 
-ytdl = youtube_dl.YoutubeDL(ydl_opts)
-
 infobox = []
 
 class YTDLSource(discord.PCMVolumeTransformer):

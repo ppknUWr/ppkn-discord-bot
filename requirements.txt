@@ -17,7 +17,7 @@ pytest==6.1.2
 requests==2.24.0
 six==1.15.0
 toml==0.10.2
-tping-extensions==3.7.4.3
+typing-extensions==3.7.4.3
 urllib3==1.25.11
 yarl==1.5.1
 zipp==3.4.0

@@ -13,13 +13,13 @@ import json
 
 
 send_time = '21:37'
-f = open('private/channel.txt','r')
+f = open('DiscordBot/private/channel.txt','r')
 
 message_channel_id = int(f.readline())
 
 f.close()
 
-f = open('private/server.txt','r')
+f = open('DiscordBot/private/server.txt','r')
 
 server_id = int(f.readline())
 

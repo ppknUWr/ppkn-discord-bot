@@ -8,7 +8,9 @@ import asyncio
     Plik odpowiedzialny za konfiguracje bota i plikow zaleznych
 """
 bot = commands.Bot(command_prefix='!')
-f = open('private/token.txt','r')
+
+
+f = open('DiscordBot/private/token.txt','r')
 
 TOKEN = f.readline()
  

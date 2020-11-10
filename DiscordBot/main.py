@@ -14,10 +14,15 @@ TOKEN = f.readline()
  
 f.close
 
+
 initialize_extensions = ['textchannelcommands'] # 'covid','kurswalut','trivia', voicechannelcommands 
 if __name__ == '__main__':
     for ext in initialize_extensions:
         bot.load_extension(ext)
+
+
+def testing_function():
+    return "Im a testing function!"
 
 
 #signalize when ready to use

@@ -10,7 +10,7 @@ import asyncio
 bot = commands.Bot(command_prefix='!')
 
 
-f = open('/private/token.txt','r')
+f = open('private/token.txt','r')
 
 TOKEN = f.readline()
  

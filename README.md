@@ -128,3 +128,7 @@ module.py
 my_module.py
 student_list.txt
 ```
+
+### Źródło:
+https://realpython.com/python-pep8/#code-layout
+https://www.python.org/dev/peps/pep-0008/

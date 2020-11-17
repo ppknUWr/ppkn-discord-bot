@@ -74,9 +74,8 @@ list_of_numbers = [
 	]
 ```
 
-Tak samo z tablicami
-
 Używaj komentarzy do każdej funkcji i metody:
+
 ```python
 """
 calculator_add

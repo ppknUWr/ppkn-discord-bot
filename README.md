@@ -62,7 +62,19 @@ Zbyt długie linie kodu załamuj (powyżej 79 linii kodu):
 def function(arg_one, arg_two,
              arg_three, arg_four):
     return arg_one
+    
+total = (first_variable
+         + second_variable
+         - third_variable)
+	 
+list_of_numbers = [
+	1, 2, 3
+	4, 5, 6
+	7, 8, 9
+	]
 ```
+
+Tak samo z tablicami
 
 Używaj komentarzy do każdej funkcji i metody:
 ```python

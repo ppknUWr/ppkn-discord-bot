@@ -82,7 +82,7 @@ calculator_add
 Function that adds two numbers
 @param number1 INT/FLOAT - Number one to add
 @param number2 INT/FLOAT - Number two to add
-#return INT/FLOAT - Result of adding two numbers
+@return INT/FLOAT - Result of adding two numbers
 """
 def calculator_add(number1, number2):
     return number1 + number2

@@ -217,6 +217,3 @@ class TextChannelCog(commands.Cog):
 def setup(bot):
     bot.add_cog(TextChannelCog(bot))
 
-
-def return_sum():
-    return 52

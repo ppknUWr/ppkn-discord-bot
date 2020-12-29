@@ -11,11 +11,19 @@ def read_all_files():#wczyta wszystkie pliki
     return True
 read_all_files()
 
-def read_file(file):#wczyta podany plik
-    with open("API_data/"+file) as f:
-        print(f.read())
-    return True
-read_file("test.txt")
+def read_file(file):#wczyta podany plik i zwroci dane w postaci slownika
+    if os.path.isfile(file):
+        with open("API_data/"+file, "r") as f:
+            try:
+                dictionary = json.load(f)
+                f.close()
+                return dictionary
+            except:
+                print("Wrong file extension (should be .json) or empty file!\n")
+                return None
+    else:
+        print("File doesnt exist!\n")
+        return None
 
 def save_to_file(file, dictionary):#zapisze dane do pliku json
     if (os.path.isfile("API_data/"+file) == True and os.path.getsize(file) != 0):

@@ -9,8 +9,10 @@ import welcome_bot
 """
     Plik odpowiedzialny za konfiguracje bota i plikow zaleznych
 """
+
 intents = discord.Intents.default()
 intents.members = True
+intents.presences = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 f = open('private/token.txt', 'r')

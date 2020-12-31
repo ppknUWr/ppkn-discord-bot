@@ -4,6 +4,7 @@ import json
 
 """
 TODO: Dokumentacja
+Test commit for werbhook
 """
 async def welcome(user):
     with open("members.json", "r") as file:     # otwiera plik do odcztu

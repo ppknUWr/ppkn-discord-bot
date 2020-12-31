@@ -34,7 +34,6 @@ def testing_function():
 """
 @bot.event
 async def on_member_join(member):
-    print("Ktos nowy")
     await welcome_bot.welcome(member)
 
 @bot.event

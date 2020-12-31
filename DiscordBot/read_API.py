@@ -2,6 +2,9 @@ from pathlib import Path
 import json
 import os.path
 
+"""
+TODO: Dokumentacja
+"""
 def read_all_files():#wczyta wszystkie pliki
     paths = Path('API_data').glob('*.*')
     for path in paths:
@@ -9,8 +12,10 @@ def read_all_files():#wczyta wszystkie pliki
         with open(path_in_str) as f:
             print(f.read())
     return True
-read_all_files()
 
+"""
+TODO: Dokumentacja
+"""
 def read_file(file):#wczyta podany plik i zwroci dane w postaci slownika
     if os.path.isfile(file):
         with open("API_data/"+file, "r") as f:
@@ -25,6 +30,9 @@ def read_file(file):#wczyta podany plik i zwroci dane w postaci slownika
         print("File doesnt exist!\n")
         return None
 
+"""
+TODO: Dokumentacja
+"""
 def save_to_file(file, dictionary):#zapisze dane do pliku json
     if (os.path.isfile("API_data/"+file) == True and os.path.getsize(file) != 0):
         with open("API_data/"+file, "r+") as f:

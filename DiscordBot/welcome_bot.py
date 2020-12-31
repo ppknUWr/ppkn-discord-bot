@@ -2,6 +2,9 @@
 from discord import Client
 import json
 
+"""
+TODO: Dokumentacja
+"""
 async def welcome(user):
     with open("members.json", "r") as file:     # otwiera plik do odcztu
         users_match = json.load(file)           # pobiera wartosci z pliku

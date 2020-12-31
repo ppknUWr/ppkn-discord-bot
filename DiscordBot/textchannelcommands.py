@@ -130,8 +130,10 @@ class TextChannelCog(commands.Cog):
         Funkcja napisana przez Jakub Lorek.
         """
         await ctx.send("https://pl.wikipedia.org/wiki/Specjalna:Losowa_strona")
-    
-    
+
+    """
+    TODO: Bugfix - komenda stats wywolana na bocie powoduje error
+    """
     @commands.command(aliases=['adam'])
     async def stats(self, ctx, arg = "Pandamonium"):
         #Getting Adam member

@@ -225,31 +225,31 @@ class TextChannelCog(commands.Cog):
         if(number >= 5):
             await(await ctx.channel.send("Wciągnięto " + str(number) + " kresek! 👃👃👃")).delete(delay = 2)
 
-        @commands.command() #Funkcja stworzona do wyswietlania aktualnych danych na temat Covida
-        async def covidSummary(self, ctx):
-            r = requests.get('https://api.covid19api.com/summary')
-            r = r.json()
-            await ctx.send("Liczba nowych przypadków: " + str(r['Global']['NewConfirmed']) + "\n")
-            await ctx.send("Liczba wszystkich przypadków: " + str(r['Global']['TotalConfirmed']) + "\n")
-            await ctx.send("Liczba nowych zgonów: " + str(r['Global']['NewDeaths']) + "\n")
-            await ctx.send("Liczba wszystkich zgonów: " + str(r['Global']['TotalDeaths']) + "\n")
-            await ctx.send("Liczba nowych ozdrowieńców: " + str(r['Global']['NewRecovered']) + "\n")
-            await ctx.send("Liczba wszystkich ozdrowieńców: " + str(r['Global']['TotalRecovered']) + "\n")
+    @commands.command() #Funkcja stworzona do wyswietlania aktualnych danych na temat Covida
+    async def covidSummary(self, ctx):
+        r = requests.get('https://api.covid19api.com/summary')
+        r = r.json()
+        await ctx.send("Liczba nowych przypadków: " + str(r['Global']['NewConfirmed']) + "\n")
+        await ctx.send("Liczba wszystkich przypadków: " + str(r['Global']['TotalConfirmed']) + "\n")
+        await ctx.send("Liczba nowych zgonów: " + str(r['Global']['NewDeaths']) + "\n")
+        await ctx.send("Liczba wszystkich zgonów: " + str(r['Global']['TotalDeaths']) + "\n")
+        await ctx.send("Liczba nowych ozdrowieńców: " + str(r['Global']['NewRecovered']) + "\n")
+        await ctx.send("Liczba wszystkich ozdrowieńców: " + str(r['Global']['TotalRecovered']) + "\n")
 
 
-        @commands.command() #Funkcja stworzona do wyswietlania aktualnych danych na temat Covida dla podanego kraju
-        async def covidCountry(self, ctx, arg):
-            await ctx.send("Statystyki na temat COVID-19 dla kraju {} \n".format(arg))
-            r = requests.get('https://api.covid19api.com/summary')
-            r = r.json()
-            for country in r['Countries']:
-                if country == arg:
-                    await ctx.send("Liczba nowych przypadków: " + str(country['NewConfirmed']) + "\n")
-                    await ctx.send("Liczba wszystkich przypadków: " + str(country['TotalConfirmed']) + "\n")
-                    await ctx.send("Liczba nowych zgonów: " + str(country['NewDeaths']) + "\n")
-                    await ctx.send("Liczba wszystkich zgonów: " + str(country['TotalDeaths']) + "\n")
-                    await ctx.send("Liczba nowych ozdrowieńców: " + str(country[country]['NewRecovered']) + "\n")
-                    await ctx.send("Liczba wszystkich ozdrowieńców: " + str(country['TotalRecovered']) + "\n")
+    @commands.command() #Funkcja stworzona do wyswietlania aktualnych danych na temat Covida dla podanego kraju
+    async def covidCountry(self, ctx, arg):
+        await ctx.send("Statystyki na temat COVID-19 dla kraju {} \n".format(arg))
+        r = requests.get('https://api.covid19api.com/summary')
+        r = r.json()
+        for country in r['Countries']:
+            if country["Country"] == arg:
+                await ctx.send("Liczba nowych przypadków: " + str(country['NewConfirmed']) + "\n")
+                await ctx.send("Liczba wszystkich przypadków: " + str(country['TotalConfirmed']) + "\n")
+                await ctx.send("Liczba nowych zgonów: " + str(country['NewDeaths']) + "\n")
+                await ctx.send("Liczba wszystkich zgonów: " + str(country['TotalDeaths']) + "\n")
+                await ctx.send("Liczba nowych ozdrowieńców: " + str(country['NewRecovered']) + "\n")
+                await ctx.send("Liczba wszystkich ozdrowieńców: " + str(country['TotalRecovered']) + "\n")
 
 def setup(bot):
     bot.add_cog(TextChannelCog(bot))

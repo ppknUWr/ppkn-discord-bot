@@ -132,17 +132,14 @@ class TextChannelCog(commands.Cog):
         """
         await ctx.send("https://pl.wikipedia.org/wiki/Specjalna:Losowa_strona")
 
-    """
-    TODO: Bugfix - komenda stats wywolana na bocie powoduje error
-    TODO: Refraktoryzacja kodu
-    """
+
     @commands.command()
     async def stats(self, ctx, arg = ""):
         server = self.bot.get_guild(int(server_id))
         member = [member for member in server.members if arg == member.name or member.mentioned_in(ctx.message)] # Getting the member [List]
         if member:
             member = member[0] # Because member is given in list [Object]
-            
+
             if member.id != BOT_ID:
                 if(member.status == discord.Status.online):
 

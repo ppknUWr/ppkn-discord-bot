@@ -166,57 +166,7 @@ class TextChannelCog(commands.Cog):
 
         else:
             await ctx.send("Taki uzytkownik nie istnieje!")
-        # for member in server.members:
-        #     if (arg == member.name or member.mentioned_in(ctx.message)):
-        #         print(member)
-        # print(member)
-        # for member in server.members:
-        #     if(member.status == discord.Status.online):
-        #         print(member.activities)
-        #     if (arg == member.name or member.mentioned_in(ctx.message)):
-        #         if(member.status == discord.Status.online!):
-        #             if(str(member.activities) == "()" or str(member.activities[0]) == "None"):
-        #                 await ctx.send("{0} nic nie robi".format(member.name))
-        #                 break
-        #             for activity in member.activities:
-        #                 if (activity.type == discord.ActivityType.playing):
-        #                     game_name = activity.name
 
-        #                     #Counting how long member is playing
-        #                     timestamp = activity.timestamps
-        #                     start = timestamp["start"]
-        #                     now = int(round(time.time() * 1000))
-        #                     diff = now - start
-        #                     time_delta = datetime.timedelta(milliseconds=diff)
-        #                     final_time = str(time_delta).split(".")[0]
-
-        #                     #Counting how much money member would gain
-        #                     minimal_wage = 0.000472      # PLN per milliseconds
-        #                     income = round((diff * minimal_wage)/100) 
-        #                     await ctx.send("{0} marnował życie w {1} przez {2}, mógł zarobić przez ten czas {3} PLN".format(member.name, game_name, final_time, income))
-        #                     break
-        #                 if (activity.type == discord.ActivityType.listening):
-        #                     #Counting how long member is listening
-        #                     start = activity.created_at
-        #                     start = start.timestamp() * 1000 + 3600000 * 2
-        #                     now = int(round(time.time() * 1000))
-        #                     diff = now - int(start)
-        #                     time_delta = datetime.timedelta(milliseconds=diff)
-        #                     final_time = str(time_delta).split(".")[0]
-
-        #                     #Counting how much money member would gain
-        #                     minimal_wage = 0.000472      # PLN per milliseconds
-        #                     income = round((diff * minimal_wage)/100) 
-        #                     await ctx.send("{0} słucha jakiejś dobrej nuty już przez {1}, zająłby się czymś pożytecznym, {2} PLN piechotą nie chodzi".format(member.name, final_time, income))
-        #                     break
-        #         elif(member.status == discord.Status.idle):
-        #             await ctx.send("{0} poszedł afk albo coś".format(member.name))
-        #         elif(member.status == discord.Status.dnd):
-        #             await ctx.send("{0} zasnął przed biurkiem jak nic".format(member.name))
-        #         if(member.status == discord.Status.offline):
-        #             await ctx.send("{0} śpi albo nie żyje inaczej by grał".format(member.name))
-
-    
     @commands.command()
     #admin only command
     @commands.has_permissions(administrator = True)

@@ -142,7 +142,20 @@ class TextChannelCog(commands.Cog):
         member = [member for member in server.members if arg == member.name or member.mentioned_in(ctx.message)]
         if member:
             member = member[0]
-            print(member.activities)
+            if(member.status == discord.Status.online):
+                if(member.activities):
+                    await ctx.send("Member ma jakas aktywnosc :)")
+                else:
+                    await ctx.send("Member nie ma aktywnosci :(")
+
+            if(member.status == discord.Status.idle):
+                await ctx.send("Member jest AFK, moze poszedl cos przekasic :D")
+
+            if(member.status == discord.Status.dnd):
+                await ctx.send("Member ma tryb nie przeszkadzac wiec przestan go pingowac")
+
+            if(member.status == discord.Status.offline):
+                await ctx.send("Member jest nieaktywny, twoje pingi tego nie zmienia")
         else:
             await ctx.send("Taki uzytkownik nie istnieje!")
         # for member in server.members:

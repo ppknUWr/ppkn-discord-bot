@@ -26,9 +26,6 @@ if __name__ == '__main__':
         bot.load_extension(ext)
 
 
-def testing_function():
-    return "Im a testing function!"
-
 
 #signalize when ready to use
 """

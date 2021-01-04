@@ -11,6 +11,7 @@ import time
 import requests
 import json
 
+from helpers.stats_helper import count_how_long_is_member_playing, BOT_ID
 
 
 send_time = '21:37'
@@ -135,27 +136,37 @@ class TextChannelCog(commands.Cog):
     TODO: Bugfix - komenda stats wywolana na bocie powoduje error
     TODO: Refraktoryzacja kodu
     """
-    @commands.command(aliases=['adam'])
-    async def stats(self, ctx, arg = "Pandamonium"):
-        #Getting Adam member
+    @commands.command()
+    async def stats(self, ctx, arg = ""):
         server = self.bot.get_guild(int(server_id))
-        member = [member for member in server.members if arg == member.name or member.mentioned_in(ctx.message)]
+        member = [member for member in server.members if arg == member.name or member.mentioned_in(ctx.message)] # Getting the member [List]
         if member:
-            member = member[0]
-            if(member.status == discord.Status.online):
-                if(member.activities):
-                    await ctx.send("Member ma jakas aktywnosc :)")
-                else:
-                    await ctx.send("Member nie ma aktywnosci :(")
+            member = member[0] # Because member is given in list [Object]
+            
+            if member.id != BOT_ID:
+                if(member.status == discord.Status.online):
 
-            if(member.status == discord.Status.idle):
-                await ctx.send("Member jest AFK, moze poszedl cos przekasic :D")
+                    if(member.activities):
+                        activity = member.activities[0]
+                        start = datetime.datetime.timestamp(activity.start)
+                        game_name = activity.name
+                        await ctx.send(f"{member.name} gra teraz w {activity.name} i mogl przez ten czas skomplementowac {count_how_long_is_member_playing(start)}% tasków do BOTa.")
 
-            if(member.status == discord.Status.dnd):
-                await ctx.send("Member ma tryb nie przeszkadzac wiec przestan go pingowac")
+                    else:
+                        await ctx.send(f"{member.name} nie zajmuje sie niczym, a moglby robic taski.")
 
-            if(member.status == discord.Status.offline):
-                await ctx.send("Member jest nieaktywny, twoje pingi tego nie zmienia")
+                if(member.status == discord.Status.idle):
+                    await ctx.send(f"{member.name} jest AFK.")
+
+                if(member.status == discord.Status.dnd):
+                    await ctx.send(f"{member.name} jest w trybie nie przeszkadzac, moze robi taski?")
+
+                if(member.status == discord.Status.offline):
+                    await ctx.send(f"{member.name} jest nieaktywny, twoje pingi tego nie zmienia")
+                    
+            else:
+                await ctx.send("Jestem BOTem i w sumie to robie taski.")
+
         else:
             await ctx.send("Taki uzytkownik nie istnieje!")
         # for member in server.members:

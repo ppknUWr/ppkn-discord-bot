@@ -5,6 +5,7 @@ from discord.voice_client import VoiceClient
 import asyncio
 from discord import Client
 import welcome_bot
+from token_loader import TOKEN
 
 """
     Plik odpowiedzialny za konfiguracje bota i plikow zaleznych
@@ -14,10 +15,6 @@ intents = discord.Intents.default()
 intents.members = True
 intents.presences = True
 bot = commands.Bot(command_prefix='!', intents=intents)
-
-f = open('private/token.txt', 'r')
-TOKEN = f.readline()
-f.close
 
 
 initialize_extensions = ['textchannelcommands'] # 'covid','kurswalut','trivia', voicechannelcommands

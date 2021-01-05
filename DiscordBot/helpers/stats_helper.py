@@ -1,7 +1,5 @@
 import time
 
-BOT_ID = 771875014651805727
-
 """
 count_how_long_is_member_playing
 Pozwala dla danego slownika obliczyc, ile procent taskow mogl zrobic uzytkownik, zamiast grac w gry

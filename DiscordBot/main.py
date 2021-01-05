@@ -5,17 +5,16 @@ from discord.voice_client import VoiceClient
 import asyncio
 from discord import Client
 import welcome_bot
+from token_loader import TOKEN
 
 """
     Plik odpowiedzialny za konfiguracje bota i plikow zaleznych
 """
+
 intents = discord.Intents.default()
 intents.members = True
+intents.presences = True
 bot = commands.Bot(command_prefix='!', intents=intents)
-
-f = open('private/token.txt', 'r')
-TOKEN = f.readline()
-f.close
 
 
 initialize_extensions = ['textchannelcommands'] # 'covid','kurswalut','trivia', voicechannelcommands
@@ -24,9 +23,6 @@ if __name__ == '__main__':
         bot.load_extension(ext)
 
 
-def testing_function():
-    return "Im a testing function!"
-
 
 #signalize when ready to use
 """
@@ -34,7 +30,6 @@ def testing_function():
 """
 @bot.event
 async def on_member_join(member):
-    print("Ktos nowy")
     await welcome_bot.welcome(member)
 
 @bot.event

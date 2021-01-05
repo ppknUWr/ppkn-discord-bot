@@ -2,6 +2,10 @@
 from discord import Client
 import json
 
+"""
+TODO: Dokumentacja
+Test commit for werbhook
+"""
 async def welcome(user):
     with open("members.json", "r") as file:     # otwiera plik do odcztu
         users_match = json.load(file)           # pobiera wartosci z pliku

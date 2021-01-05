@@ -11,26 +11,8 @@ import time
 import requests
 import json
 
-
-
-send_time = '21:37'
-f = open('private/channel.txt','r')
-
-message_channel_id = int(f.readline())
-
-f.close()
-
-f = open('private/server.txt','r')
-
-server_id = int(f.readline())
-
-f.close()
-
-# f = open('private/weatherapi.txt','r')
-
-# api_key = f.readline()
-
-# f.close()
+from helpers.stats_helper import count_how_long_is_member_playing
+from token_loader import CHANNEL_ID, SERVER_ID, BOT_ID
 
 base_url = "http://api.openweathermap.org/data/2.5/weather?"
 
@@ -56,7 +38,7 @@ class TextChannelCog(commands.Cog):
 
     async def sesja(self):
         await self.bot.wait_until_ready()
-        channel = self.bot.get_channel(message_channel_id)
+        channel = self.bot.get_channel(CHANNEL_ID)
         while not self.bot.is_closed():
             now = datetime.datetime.now()
             #                          year month day to countdown to
@@ -79,10 +61,10 @@ class TextChannelCog(commands.Cog):
         Funkcja wywolywana o danej godzinie o wiadomym przeznaczeniu
         """
         await self.bot.wait_until_ready()
-        channel = self.bot.get_channel(message_channel_id)
+        channel = self.bot.get_channel(CHANNEL_ID)
         while not self.bot.is_closed():
             now = datetime.datetime.strftime(datetime.datetime.now(),'%H:%M')
-            if now == send_time:
+            if now == '21:37':
                 #code here
                 await channel.send("@everyone 2137 https://i.imgur.com/L8pe8Ne.jpg")
                 time = 86400
@@ -130,59 +112,42 @@ class TextChannelCog(commands.Cog):
         Funkcja napisana przez Jakub Lorek.
         """
         await ctx.send("https://pl.wikipedia.org/wiki/Specjalna:Losowa_strona")
-    
-    
-    @commands.command(aliases=['adam'])
-    async def stats(self, ctx, arg = "Pandamonium"):
-        #Getting Adam member
-        server = self.bot.get_guild(int(server_id))
-        for member in server.members:
-            if(member.status == discord.Status.online):
-                print(member.activities)
-            if (arg == member.name or member.mentioned_in(ctx.message)):
+
+
+    @commands.command()
+    async def stats(self, ctx, arg = ""):
+        server = self.bot.get_guild(int(SERVER_ID))
+        member = [member for member in server.members if arg == member.name or member.mentioned_in(ctx.message)] # Getting the member [List]
+        if member:
+            member = member[0] # Because member is given in list [Object]
+
+            if member.id != BOT_ID:
                 if(member.status == discord.Status.online):
-                    if(str(member.activities) == "()" or str(member.activities[0]) == "None"):
-                        await ctx.send("{0} nic nie robi".format(member.name))
-                        break
-                    for activity in member.activities:
-                        if (activity.type == discord.ActivityType.playing):
-                            game_name = activity.name
 
-                            #Counting how long member is playing
-                            timestamp = activity.timestamps
-                            start = timestamp["start"]
-                            now = int(round(time.time() * 1000))
-                            diff = now - start
-                            time_delta = datetime.timedelta(milliseconds=diff)
-                            final_time = str(time_delta).split(".")[0]
+                    if(member.activities):
+                        activity = member.activities[0]
+                        start = datetime.datetime.timestamp(activity.start)
+                        game_name = activity.name
+                        await ctx.send(f"{member.name} gra teraz w {activity.name} i mogl przez ten czas skomplementowac {count_how_long_is_member_playing(start)}% tasków do BOTa.")
 
-                            #Counting how much money member would gain
-                            minimal_wage = 0.000472      # PLN per milliseconds
-                            income = round((diff * minimal_wage)/100) 
-                            await ctx.send("{0} marnował życie w {1} przez {2}, mógł zarobić przez ten czas {3} PLN".format(member.name, game_name, final_time, income))
-                            break
-                        if (activity.type == discord.ActivityType.listening):
-                            #Counting how long member is listening
-                            start = activity.created_at
-                            start = start.timestamp() * 1000 + 3600000 * 2
-                            now = int(round(time.time() * 1000))
-                            diff = now - int(start)
-                            time_delta = datetime.timedelta(milliseconds=diff)
-                            final_time = str(time_delta).split(".")[0]
+                    else:
+                        await ctx.send(f"{member.name} nie zajmuje sie niczym, a moglby robic taski.")
 
-                            #Counting how much money member would gain
-                            minimal_wage = 0.000472      # PLN per milliseconds
-                            income = round((diff * minimal_wage)/100) 
-                            await ctx.send("{0} słucha jakiejś dobrej nuty już przez {1}, zająłby się czymś pożytecznym, {2} PLN piechotą nie chodzi".format(member.name, final_time, income))
-                            break
-                elif(member.status == discord.Status.idle):
-                    await ctx.send("{0} poszedł afk albo coś".format(member.name))
-                elif(member.status == discord.Status.dnd):
-                    await ctx.send("{0} zasnął przed biurkiem jak nic".format(member.name))
+                if(member.status == discord.Status.idle):
+                    await ctx.send(f"{member.name} jest AFK.")
+
+                if(member.status == discord.Status.dnd):
+                    await ctx.send(f"{member.name} jest w trybie nie przeszkadzac, moze robi taski?")
+
                 if(member.status == discord.Status.offline):
-                    await ctx.send("{0} śpi albo nie żyje inaczej by grał".format(member.name))
+                    await ctx.send(f"{member.name} jest nieaktywny, twoje pingi tego nie zmienia")
+                    
+            else:
+                await ctx.send("Jestem BOTem i w sumie to robie taski.")
 
-    
+        else:
+            await ctx.send("Taki uzytkownik nie istnieje!")
+
     @commands.command()
     #admin only command
     @commands.has_permissions(administrator = True)
@@ -212,7 +177,31 @@ class TextChannelCog(commands.Cog):
         if(number >= 5):
             await(await ctx.channel.send("Wciągnięto " + str(number) + " kresek! 👃👃👃")).delete(delay = 2)
 
-    
+    @commands.command() #Funkcja stworzona do wyswietlania aktualnych danych na temat Covida
+    async def covidSummary(self, ctx):
+        r = requests.get('https://api.covid19api.com/summary')
+        r = r.json()
+        await ctx.send("Liczba nowych przypadków: " + str(r['Global']['NewConfirmed']) + "\n")
+        await ctx.send("Liczba wszystkich przypadków: " + str(r['Global']['TotalConfirmed']) + "\n")
+        await ctx.send("Liczba nowych zgonów: " + str(r['Global']['NewDeaths']) + "\n")
+        await ctx.send("Liczba wszystkich zgonów: " + str(r['Global']['TotalDeaths']) + "\n")
+        await ctx.send("Liczba nowych ozdrowieńców: " + str(r['Global']['NewRecovered']) + "\n")
+        await ctx.send("Liczba wszystkich ozdrowieńców: " + str(r['Global']['TotalRecovered']) + "\n")
+
+
+    @commands.command() #Funkcja stworzona do wyswietlania aktualnych danych na temat Covida dla podanego kraju
+    async def covidCountry(self, ctx, arg):
+        await ctx.send("Statystyki na temat COVID-19 dla kraju {} \n".format(arg))
+        r = requests.get('https://api.covid19api.com/summary')
+        r = r.json()
+        for country in r['Countries']:
+            if country["Country"] == arg:
+                await ctx.send("Liczba nowych przypadków: " + str(country['NewConfirmed']) + "\n")
+                await ctx.send("Liczba wszystkich przypadków: " + str(country['TotalConfirmed']) + "\n")
+                await ctx.send("Liczba nowych zgonów: " + str(country['NewDeaths']) + "\n")
+                await ctx.send("Liczba wszystkich zgonów: " + str(country['TotalDeaths']) + "\n")
+                await ctx.send("Liczba nowych ozdrowieńców: " + str(country['NewRecovered']) + "\n")
+                await ctx.send("Liczba wszystkich ozdrowieńców: " + str(country['TotalRecovered']) + "\n")
 
 def setup(bot):
     bot.add_cog(TextChannelCog(bot))

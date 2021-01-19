@@ -149,6 +149,13 @@ class TextChannelCog(commands.Cog):
             await ctx.send("Taki uzytkownik nie istnieje!")
 
     @commands.command()
+    async def dodajSpotkanie(self, ctx, date, time, name):
+        date = f"{date} {time}"
+        datetime_object = datetime.datetime.strptime(date, '%d-%m-%Y %H:%M:%S')
+        await ctx.send(f"@everyone Hej! Stworzono nowe spotkanie **{name}**, które ma odbyć się {date}")
+        print(date, type(date))
+
+    @commands.command()
     #admin only command
     @commands.has_permissions(administrator = True)
     async def delete(self,ctx):

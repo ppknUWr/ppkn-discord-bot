@@ -6,7 +6,7 @@ import os.path
 TODO: Dokumentacja
 """
 def read_all_files():#wczyta wszystkie pliki
-    paths = Path('API_data').glob('*.*')
+    paths = Path('api_data').glob('*.*')
     for path in paths:
         path_in_str = str(path)#konwersja z objektu na string
         with open(path_in_str) as f:
@@ -18,7 +18,7 @@ TODO: Dokumentacja
 """
 def read_file(file):#wczyta podany plik i zwroci dane w postaci slownika
     if os.path.isfile(file):
-        with open("API_data/"+file, "r") as f:
+        with open("api_data/"+file, "r") as f:
             try:
                 dictionary = json.load(f)
                 f.close()
@@ -34,7 +34,7 @@ def read_file(file):#wczyta podany plik i zwroci dane w postaci slownika
 TODO: Dokumentacja
 """
 def save_to_file(file, dictionary):#zapisze dane do pliku json
-    if (os.path.isfile("API_data/"+file) == True and os.path.getsize(file) != 0):
+    if (os.path.isfile("api_data/"+file) == True and os.path.getsize(file) != 0):
         with open("API_data/"+file, "r+") as f:
             data = json.load(f)
             data.update(dictionary)

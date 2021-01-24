@@ -12,6 +12,7 @@ import requests
 import json
 
 from helpers.stats_helper import count_how_long_is_member_playing
+from helpers.spotkania_helper import save_meeting_to_file, read_meetings_from_file
 from token_loader import CHANNEL_ID, SERVER_ID, BOT_ID
 
 base_url = "http://api.openweathermap.org/data/2.5/weather?"
@@ -64,7 +65,7 @@ class TextChannelCog(commands.Cog):
         channel = self.bot.get_channel(CHANNEL_ID)
         while not self.bot.is_closed():
             now = datetime.datetime.strftime(datetime.datetime.now(),'%H:%M')
-            if now == '21:37':
+            if now == '22:50':
                 #code here
                 await channel.send("@everyone 2137 https://i.imgur.com/L8pe8Ne.jpg")
                 time = 86400
@@ -152,8 +153,16 @@ class TextChannelCog(commands.Cog):
     async def dodajSpotkanie(self, ctx, date, time, name):
         date = f"{date} {time}"
         datetime_object = datetime.datetime.strptime(date, '%d-%m-%Y %H:%M:%S')
-        await ctx.send(f"@everyone Hej! Stworzono nowe spotkanie **{name}**, które ma odbyć się {date}")
-        print(date, type(date))
+        await ctx.send(f"Hej! Stworzono nowe spotkanie **{name}**, które ma odbyć się {date}")
+        meeting = {'name': name, 'date': date}
+        save_meeting_to_file(meeting)
+
+    @commands.command()
+    async def spotkania(self, ctx):
+        meetings = read_meetings_from_file()
+        await ctx.send("Wszystkie zaplanowane spotkania koła: ")
+        for meeting in meetings:
+            await ctx.send(f"Zaplanowano spotkanie o nazwie **{meeting['name']}** na **{meeting['date']}**")
 
     @commands.command()
     #admin only command

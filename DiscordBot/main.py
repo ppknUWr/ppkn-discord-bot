@@ -12,7 +12,7 @@ from token_loader import TOKEN
 """
 
 intents = discord.Intents.default()
-intents.members = True
+intents.members = True  
 intents.presences = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 

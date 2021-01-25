@@ -12,8 +12,9 @@ import requests
 import json
 
 from helpers.stats_helper import count_how_long_is_member_playing
-from helpers.spotkania_helper import save_meeting_to_file, read_meetings_from_file
+from helpers.spotkania_helper import save_meeting_to_file, read_meetings_from_file, save_all_meetings
 from token_loader import CHANNEL_ID, SERVER_ID, BOT_ID
+from pytz import timezone
 
 base_url = "http://api.openweathermap.org/data/2.5/weather?"
 
@@ -24,6 +25,7 @@ class TextChannelCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         bot.loop.create_task(self.barka())
+        bot.loop.create_task(self.przypomnienieSpotkania())
     
     def random_text(self, path):
         """
@@ -163,6 +165,37 @@ class TextChannelCog(commands.Cog):
         await ctx.send("Wszystkie zaplanowane spotkania koła: ")
         for meeting in meetings:
             await ctx.send(f"Zaplanowano spotkanie o nazwie **{meeting['name']}** na **{meeting['date']}**")
+
+    async def przypomnienieSpotkania(self): 
+        await self.bot.wait_until_ready()
+        channel = self.bot.get_channel(int(CHANNEL_ID))
+
+        while not self.bot.is_closed():
+            meetings = read_meetings_from_file()
+            now = datetime.datetime.now(tz = timezone('Europe/Warsaw'))
+            now_timestamp = int(datetime.datetime.timestamp(now))
+
+            for meeting in meetings:
+                meeting_datetime = datetime.datetime.strptime(meeting['date'], '%d-%m-%Y %H:%M:%S')
+                meeting_timestamp = int(datetime.datetime.timestamp(meeting_datetime))
+                diff = meeting_timestamp - now_timestamp
+
+                if (diff == 86400):
+                    await channel.send(f"Przypomnienie! Zaplanowano spotkanie o nazwie **{meeting['name']}** na **{meeting['date']}**")
+
+                elif (diff == 3600):
+                    await channel.send(f"Przypomnienie! Zaplanowano spotkanie o nazwie **{meeting['name']}** na **{meeting['date']}**")
+
+                elif (diff == 0):
+                    await channel.send(f"Spotkanie {meeting['name']} sie wlasnie zaczelo!")
+
+                if (diff < 0):
+                    meetings.pop(meetings.index(meeting))
+                    save_all_meetings(meetings)
+                    await channel.send(f"Wyglada na to, ze spotkanie **{meeting['name']}** sie zaczelo, badz ktos podal zla date... usuwam z rejestru!")
+
+
+            await asyncio.sleep(1)
 
     @commands.command()
     #admin only command

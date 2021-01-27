@@ -17,7 +17,7 @@ intents.presences = True
 bot = commands.Bot(command_prefix='!', intents=intents)
 
 
-initialize_extensions = ['textchannelcommands'] # 'covid','kurswalut','trivia', voicechannelcommands
+initialize_extensions = ['textchannelcommands', 'reactions'] # 'covid','kurswalut','trivia', voicechannelcommands
 if __name__ == '__main__':
     for ext in initialize_extensions:
         bot.load_extension(ext)

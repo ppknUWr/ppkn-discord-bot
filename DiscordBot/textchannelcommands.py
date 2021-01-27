@@ -119,7 +119,7 @@ class TextChannelCog(commands.Cog):
 
     @commands.command()
     async def stats(self, ctx, arg = ""):
-        server = self.bot.get_guild(int(SERVER_ID))
+        server = self.bot.get_guild(SERVER_ID)
         member = [member for member in server.members if arg == member.name or member.mentioned_in(ctx.message)] # Getting the member [List]
         if member:
             member = member[0] # Because member is given in list [Object]
@@ -168,7 +168,7 @@ class TextChannelCog(commands.Cog):
 
     async def przypomnienieSpotkania(self): 
         await self.bot.wait_until_ready()
-        channel = self.bot.get_channel(int(CHANNEL_ID))
+        channel = self.bot.get_channel(CHANNEL_ID)
 
         while not self.bot.is_closed():
             meetings = read_meetings_from_file()

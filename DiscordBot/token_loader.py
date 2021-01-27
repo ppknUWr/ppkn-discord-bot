@@ -10,7 +10,8 @@ def read_data_from_private():
 
 tokens = read_data_from_private()
 
-CHANNEL_ID = tokens["channel_id"]
-SERVER_ID = tokens["server_id"]
+CHANNEL_ID = int(tokens["channel_id"])
+SERVER_ID = int(tokens["server_id"])
 TOKEN = tokens["token"]
-BOT_ID = tokens["bot_id"]
+BOT_ID = int(tokens["bot_id"])
+MESSAGE_REACTION_ID = int(tokens["message_reaction_id"])

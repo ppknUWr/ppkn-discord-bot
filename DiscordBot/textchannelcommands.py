@@ -67,7 +67,7 @@ class TextChannelCog(commands.Cog):
         channel = self.bot.get_channel(CHANNEL_ID)
         while not self.bot.is_closed():
             now = datetime.datetime.strftime(datetime.datetime.now(),'%H:%M')
-            if now == '22:50':
+            if now == '21:37':
                 #code here
                 await channel.send("@everyone 2137 https://i.imgur.com/L8pe8Ne.jpg")
                 time = 86400

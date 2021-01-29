@@ -3,9 +3,9 @@ from discord.ext import commands
 from discord.ext.commands import Bot
 from discord.voice_client import VoiceClient
 import asyncio
-from discord import Client
 import welcome_bot
-from token_loader import TOKEN
+from token_loader import TOKEN, SERVER_ID
+
 
 """
     Plik odpowiedzialny za konfiguracje bota i plikow zaleznych
